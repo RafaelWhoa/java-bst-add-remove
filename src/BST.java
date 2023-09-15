@@ -36,7 +36,6 @@ public class BST<T extends Comparable<? super T>> {
         else {
             rAddData(root, data);
         }
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
     }
 
     /**
@@ -67,7 +66,7 @@ public class BST<T extends Comparable<? super T>> {
      * There are 3 cases to consider:
      * 1: The node containing the data is a leaf (no children). In this case,
      * simply remove it.
-     * 2: The node containing the data ha                               s one child. In this case, simply
+     * 2: The node containing the data has one child. In this case, simply
      * replace it with its child.
      * 3: The node containing the data has 2 children. Use the SUCCESSOR to
      * replace the data. You should use recursion to find and remove the
@@ -87,8 +86,54 @@ public class BST<T extends Comparable<? super T>> {
      * @throws java.util.NoSuchElementException   If the data is not in the tree.
      */
     public T remove(T data) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        return null;
+        if (data == null) throw new IllegalArgumentException("Error: data must be valid!");
+        else{
+            BSTNode<T> dummyNode = new BSTNode<>(null);
+            root = rRemoveData(root, data, dummyNode);
+            return dummyNode.getData();
+        }
+    }
+
+    private BSTNode<T> rRemoveData(BSTNode<T> root, T data, BSTNode<T> dummyNode){
+        if (root == null) throw new NoSuchElementException("Error: data not found.");
+        else if (data.compareTo(root.getData()) < 0){
+            root.setLeft(rRemoveData(root, data, dummyNode));
+        }
+        else if (data.compareTo(root.getData()) > 0){
+            root.setRight(rRemoveData(root, data, dummyNode));
+        }
+        else {
+            dummyNode.setData(root.getData());
+            size--;
+            return removeData(root);
+        }
+        return root;
+    }
+
+    private BSTNode<T> removeData(BSTNode<T> root){
+        if (root.getLeft() == null && root.getRight() == null){
+            return null;
+        }
+        else if (root.getLeft() != null){
+            return root.getLeft();
+        }
+        else if (root.getRight() != null){
+            return root.getRight();
+        }
+        else {
+            BSTNode<T> secondDummy = new BSTNode<>(null);
+            root.setRight(rRemoveSuccessor(root.getRight(), secondDummy));
+        }
+        return root;
+    }
+
+    private BSTNode<T> rRemoveSuccessor(BSTNode<T> root, BSTNode<T> secondDummy){
+        if (root.getLeft() == null){
+            //TODO: remove successor
+        }
+        else {
+            rRemoveSuccessor(root.getLeft(), secondDummy);
+        }
     }
 
     /**
