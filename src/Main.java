@@ -5,6 +5,7 @@ public class Main {
 
         bst.add(10);
         bst.add(8);
+        System.out.println(bst.remove(10));
         System.out.println(bst.remove(8));
 
         System.out.println(bst.size());

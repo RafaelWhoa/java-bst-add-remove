@@ -94,6 +94,19 @@ public class BST<T extends Comparable<? super T>> {
         }
     }
 
+    /**
+     * Search data and recursively removes data from the BST.
+     * <p>
+     * This method checks every recursion node if it's null,
+     * which means the given data was not found.
+     * <p>
+     * Calls removeData helper method to remove the data.
+     *
+     * @param root current node for recursion
+     * @param data given data to be compared
+     * @param dummyNode dummy node to save current node
+     * @return current node for recursion
+     */
     private BSTNode<T> rRemoveData(BSTNode<T> root, T data, BSTNode<T> dummyNode){
         if (root == null) throw new NoSuchElementException("Error: data not found.");
         else if (data.compareTo(root.getData()) < 0){
@@ -110,6 +123,13 @@ public class BST<T extends Comparable<? super T>> {
         return root;
     }
 
+    /**
+     * Removes data based on BST removal rules.
+     * <p>
+     * It checks the number of node children to apply the correct removal operation.
+     * @param root node to be removed
+     * @return removed node
+     */
     private BSTNode<T> removeData(BSTNode<T> root){
         if (root.getLeft() == null && root.getRight() == null){
             return null;
@@ -128,6 +148,14 @@ public class BST<T extends Comparable<? super T>> {
         return root;
     }
 
+    /**
+     * Recursively removes node by the Successor when node to remove have two children.
+     * <p>
+     *
+     * @param root node for recursion
+     * @param secondDummy dummy node to save root data
+     * @return removed node
+     */
     private BSTNode<T> rRemoveSuccessor(BSTNode<T> root, BSTNode<T> secondDummy){
         if (root.getLeft() == null){
             secondDummy.setData(root.getData());
