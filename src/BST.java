@@ -34,7 +34,7 @@ public class BST<T extends Comparable<? super T>> {
     public void add(T data) {
         if (data == null) throw new IllegalArgumentException("Error: data must be valid!");
         else {
-            rAddData(root, data);
+            root = rAddData(root, data);
         }
     }
 
@@ -49,10 +49,10 @@ public class BST<T extends Comparable<? super T>> {
         if(root == null){
             size++;
             return new BSTNode<>(data);
-        } else if (root.getData().compareTo(data) < 0) {
+        } else if (root.getData().compareTo(data) > 0) {
             root.setLeft(rAddData(root.getLeft(), data));
         }
-        else if (root.getData().compareTo(data) > 0){
+        else if (root.getData().compareTo(data) < 0){
             root.setRight(rAddData(root.getRight(), data));
         }
         return root;
@@ -97,10 +97,10 @@ public class BST<T extends Comparable<? super T>> {
     private BSTNode<T> rRemoveData(BSTNode<T> root, T data, BSTNode<T> dummyNode){
         if (root == null) throw new NoSuchElementException("Error: data not found.");
         else if (data.compareTo(root.getData()) < 0){
-            root.setLeft(rRemoveData(root, data, dummyNode));
+            root.setLeft(rRemoveData(root.getLeft(), data, dummyNode));
         }
         else if (data.compareTo(root.getData()) > 0){
-            root.setRight(rRemoveData(root, data, dummyNode));
+            root.setRight(rRemoveData(root.getRight(), data, dummyNode));
         }
         else {
             dummyNode.setData(root.getData());
@@ -123,16 +123,19 @@ public class BST<T extends Comparable<? super T>> {
         else {
             BSTNode<T> secondDummy = new BSTNode<>(null);
             root.setRight(rRemoveSuccessor(root.getRight(), secondDummy));
+            root.setData(secondDummy.getData());
         }
         return root;
     }
 
     private BSTNode<T> rRemoveSuccessor(BSTNode<T> root, BSTNode<T> secondDummy){
         if (root.getLeft() == null){
-            //TODO: remove successor
+            secondDummy.setData(root.getData());
+            return root.getRight();
         }
         else {
-            rRemoveSuccessor(root.getLeft(), secondDummy);
+            root.setLeft(rRemoveSuccessor(root.getLeft(), secondDummy));
+            return root;
         }
     }
 

@@ -4,8 +4,8 @@ public class Main {
         BST<Integer> bst = new BST<>();
 
         bst.add(10);
-        Integer removedData = bst.remove(10);
-        System.out.println("Removed: " + removedData);
+        bst.add(8);
+        System.out.println(bst.remove(8));
 
         System.out.println(bst.size());
     }
